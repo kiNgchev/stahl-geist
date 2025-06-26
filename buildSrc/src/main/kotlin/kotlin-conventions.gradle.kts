@@ -1,13 +1,8 @@
-import org.gradle.kotlin.dsl.the
-import org.gradle.api.artifacts.VersionCatalogsExtension
-
 plugins {
     org.jetbrains.kotlin.jvm
     org.jetbrains.kotlin.plugins.`kotlinx-serialization`
     org.jetbrains.kotlin.plugins.`kotlin-allopen`
 }
-
-val libs = the<VersionCatalogsExtension>().named("libs")
 
 repositories {
     mavenCentral()
@@ -26,6 +21,8 @@ java {
 }
 
 kotlin {
+    explicitApi()
+
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
     }
