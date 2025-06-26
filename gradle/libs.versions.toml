@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.0.0"
+kotlin = "2.2.0"
 kotlinx-serialization = "1.7.3"
 spring-boot = "3.5.0"
 jmh = "1.37"
@@ -23,6 +23,8 @@ spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-
 spring-boot-starter-thymeleaf = { module = "org.springframework.boot:spring-boot-starter-thymeleaf" }
 spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
 spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+spring-boot-starter-cache = { module = "org.springframework.boot:spring-boot-starter-cache" }
+caffeine = { module = "com.github.ben-manes.caffeine:caffeine" }
 
 # Spring Boot development and runtime
 spring-boot-devtools = { module = "org.springframework.boot:spring-boot-devtools" }
@@ -68,6 +70,8 @@ r2dbc-postgresql = { module = "org.postgresql:r2dbc-postgresql" }
 
 # Monitoring
 micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus" }
+logback-loki = { group = "com.github.loki4j", name = "loki-logback-appender", version = "1.4.1" }
+janino = { group = "org.codehaus.janino", name = "janino" }
 
 # Other
 lombok = { module = "org.projectlombok:lombok" }
@@ -103,7 +107,7 @@ jmh-generator = { group = "org.openjdk.jmh", name = "jmh-generator-annprocess", 
 # Build plugins
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version = "2.2.0-Beta1" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version = "2.2.0" }
 kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin"}
 jmh = { id = "me.champeau.jmh", version.ref = "jmh-plugin" }
 dependency-managment = { id = "io.spring.dependency-management", version = "1.1.7" }
@@ -129,7 +133,6 @@ spring-implementation = [
     "reactor-kotlin-extensions",
     "liquibase-core",
     "spring-jdbc",
-    "spring-cloud-config-server",
     "spring-cloud-starter-config",
     "spring-cloud-starter-netflix-eureka-client",
     "spring-cloud-starter-vault-config",
@@ -139,12 +142,15 @@ spring-implementation = [
     "spring-session-data-redis",
     "thymeleaf-extras-springsecurity6",
     "kotlin-reflect",
-    "kotlinx-coroutines-reactor"
+    "kotlinx-coroutines-reactor",
+    "logback-loki",
+    "janino",
+    "spring-boot-starter-cache",
+    "caffeine"
 ]
 
 spring-development-only = [
     "spring-boot-devtools",
-    "spring-boot-docker-compose"
 ]
 
 spring-runtime-only = [
@@ -163,6 +169,11 @@ spring-compile-only = [
 spring-annotation-processor = [
     "spring-boot-configuration-processor",
     "lombok"
+]
+
+logback-implementation = [
+    "logback-loki",
+    "janino"
 ]
 
 # Test dependencies bundle
