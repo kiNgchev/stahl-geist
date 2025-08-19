@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    vault:
+      enabled: false
+    config:
+      enabled: false
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+nivora:
+  # TODO: Add token
+  token: ${NIVORA_BOT_TOKEN}

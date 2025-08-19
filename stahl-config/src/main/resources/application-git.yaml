@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${CONFIG_SERVER_GIT_URI}
+          default-label: master
+          ignoreLocalSshSettings: true
+          strictHostKeyChecking: false
+          private-key: ${CONFIG_SERVER_PRIVATE_KEY}
+          passphrase: ${CONFIG_SERVER_PASSPHRASE}
+          searchPaths:
+            - 'stahl-bots/{application}'
+            - '{application}'
+          clone-on-start: true

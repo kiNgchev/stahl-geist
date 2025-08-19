@@ -1,0 +1,9 @@
+scrape_configs:
+  ############ Main ############
+  - job_name: 'service-name'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+        - 'localhost:8080'
+        labels:
+          application: 'application-name'

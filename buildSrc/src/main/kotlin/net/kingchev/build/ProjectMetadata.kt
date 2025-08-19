@@ -1,6 +1,5 @@
 package net.kingchev.build
 
-
 object ProjectMetadata {
     const val PREFIX = "stahl-"
     const val PACKAGE: String = "net.kingchev"

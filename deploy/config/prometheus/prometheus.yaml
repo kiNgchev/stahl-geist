@@ -1,0 +1,42 @@
+scrape_configs:
+  ############ Main ############
+  - job_name: 'stahl-admin-server'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+        - 'host.docker.internal:9999'
+        - 'localhost:9999'
+        labels:
+          application: stahl-admin
+  - job_name: 'stahl-config-server'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - 'host.docker.internal:8888'
+          - 'localhost:8888'
+        labels:
+          application: stahl-config
+  - job_name: 'nivora-bot'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - 'host.docker.internal:7072'
+          - 'localhost:7072'
+        labels:
+          application: nivora
+  - job_name: 'serafim-bot'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - 'host.docker.internal:7071'
+          - 'localhost:7071'
+        labels:
+          application: serafim
+  - job_name: 'zentra-bot'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - 'host.docker.internal:7070'
+          - 'localhost:7070'
+        labels:
+          application: zentra

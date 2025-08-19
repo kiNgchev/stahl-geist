@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      changes:
+        - sqlFile:
+            path: classpath:db/init.sql
+      id: 0
+      author: KiNgchev

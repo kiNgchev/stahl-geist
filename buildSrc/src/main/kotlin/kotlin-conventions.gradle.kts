@@ -1,17 +1,31 @@
 plugins {
     org.jetbrains.kotlin.jvm
-    org.jetbrains.kotlin.plugins.`kotlinx-serialization`
-    org.jetbrains.kotlin.plugins.`kotlin-allopen`
+    org.jetbrains.kotlin.plugin.serialization
+    org.jetbrains.kotlin.plugin.allopen
+    org.jetbrains.kotlin.kapt
 }
 
 repositories {
     mavenCentral()
 }
 
+val libs = the<VersionCatalogsExtension>().named("libs")
+
 configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
     }
+    all {
+        resolutionStrategy {
+            libs.findBundle("kotlinx-serialization").get().map {
+                force(it)
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation(libs.findBundle("kotlinx-serialization").get())
 }
 
 java {

@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    vault:
+      enabled: false
+    config:
+      enabled: false
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+zentra:
+  token: ${ZENTRA_BOT_TOKEN}

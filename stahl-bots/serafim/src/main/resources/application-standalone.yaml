@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    vault:
+      enabled: false
+    config:
+      enabled: false
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+serafim:
+  tokens:
+    client-id: ${SERAFIM_BOT_CLIENT_ID}
+    client-secret: ${SERAFIM_BOT_CLIENT_SECRET}
+    irc: ${SERAFIM_BOT_IRS}
+  twitch-channel:
+    - "k1ngchev"

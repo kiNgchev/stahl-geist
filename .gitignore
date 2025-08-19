@@ -19,6 +19,7 @@ bin/
 
 ### IntelliJ IDEA ###
 .idea
+.run
 *.iws
 *.iml
 *.ipr
@@ -38,3 +39,6 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+amplicode.xml
+.env
