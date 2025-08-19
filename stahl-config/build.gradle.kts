@@ -8,6 +8,6 @@ dependencies {
     implementation(libs.caffeine)
     implementation(libs.bundles.logback.implementation)
     implementation(libs.spring.cloud.starter.netflix.eureka.client)
-    implementation(libs.spring.cloud.CONFIG_SERVER_URL)
+    implementation(libs.spring.cloud.config.server)
     implementation(libs.spring.boot.starter.security)
 }
