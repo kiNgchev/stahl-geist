@@ -10,5 +10,5 @@ dependencies {
     implementation("dev.kord:kord-common:${kordVersion}")
     implementation("dev.kord:kord-rest:${kordVersion}")
     implementation("dev.kord:kord-gateway:${kordVersion}")
-    implementation(project(":stahl-shared"))
+    implementation(project(":stahl-bots:bots-shared"))
 }

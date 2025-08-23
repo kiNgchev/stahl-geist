@@ -4,6 +4,6 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":stahl-shared"))
-    implementation(project(":stahl-shared"))
+    api(project(":stahl-shared"))
+    api(project(":stahl-models"))
 }

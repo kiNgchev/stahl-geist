@@ -1,5 +1,3 @@
-import java.net.URI
-
 plugins {
     id("kotlin-conventions")
     io.gatling.gradle
