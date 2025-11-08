@@ -18,8 +18,20 @@
 
 package net.kingchev.shared.utils
 
+import net.kingchev.shared.dto.ErrorDto
+import net.kingchev.shared.error.DomainError
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
+import java.time.LocalDateTime
+
+public fun response(error: DomainError): ResponseEntity<ErrorDto> {
+    val status = error.status
+    val body = ErrorDto(
+        error.message,
+        LocalDateTime.now()
+    )
+    return response(status, body)
+}
 
 public fun <T> response(body: T): ResponseEntity<T> =
     ResponseEntity
