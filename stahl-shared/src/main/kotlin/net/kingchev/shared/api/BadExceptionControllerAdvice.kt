@@ -16,27 +16,33 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.kingchev.users.controller.handler
+package net.kingchev.shared.api
 
-import net.kingchev.users.dto.ErrorResponse
+import net.kingchev.shared.dto.ErrorDto
+import net.kingchev.shared.utils.response
 import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
+import java.time.LocalDateTime
 
 @ControllerAdvice
-public class BadExceptionHandler : ResponseEntityExceptionHandler() {
+public class BadExceptionControllerAdvice : ResponseEntityExceptionHandler() {
     override fun handleMethodArgumentNotValid(
         ex: MethodArgumentNotValidException,
         headers: HttpHeaders,
         status: HttpStatusCode,
         request: WebRequest
-    ): ResponseEntity<in Any>? {
-        val message = ex.bindingResult.allErrors.first().defaultMessage ?: "Bad Request"
-        val error = ErrorResponse("error", message)
-        return ResponseEntity.badRequest().body(error)
+    ): ResponseEntity<Any> {
+        val message = ex.bindingResult.allErrors.joinToString(";") { error ->
+            error.defaultMessage ?: "Bad Request"
+        }
+
+        val body = ErrorDto(message, LocalDateTime.now())
+        return response(HttpStatus.BAD_REQUEST, body)
     }
 }

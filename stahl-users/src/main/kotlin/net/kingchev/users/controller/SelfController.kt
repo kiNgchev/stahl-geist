@@ -20,9 +20,12 @@ package net.kingchev.users.controller
 
 import jakarta.validation.Valid
 import net.kingchev.model.User
+import net.kingchev.shared.error.DomainError
+import net.kingchev.shared.utils.Result
+import net.kingchev.shared.utils.notFound
+import net.kingchev.shared.utils.response
 import net.kingchev.users.dto.UserDto
 import net.kingchev.users.service.UserService
-import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
@@ -30,38 +33,37 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/users")
 public class SelfController(private val service: UserService) {
     @GetMapping("/@me")
-    public fun me(@AuthenticationPrincipal user: User): ResponseEntity<UserDto> {
+    public fun me(@AuthenticationPrincipal user: User): Result<UserDto, DomainError> {
         if (user.username == "") {
-            return ResponseEntity.notFound().build()
+            return notFound("User is not found")
         }
-        return ResponseEntity.ok(service.findByUsername(user.username))
+        return response(service.findByUsername(user.username))
     }
 
     @PutMapping("/@me")
-    public fun updateMe(@AuthenticationPrincipal user: User, @Valid @RequestBody update: UserDto): ResponseEntity<UserDto> {
+    public fun updateMe(@AuthenticationPrincipal user: User, @Valid @RequestBody update: UserDto): Result<UserDto, DomainError> {
         if (user.username == "") {
-            return ResponseEntity.notFound().build()
+            return notFound("User not found")
         }
 
-        return ResponseEntity.ok().body(service.update(update))
+        return response(service.update(update))
     }
 
     @PatchMapping("/@me")
-    public fun partialUpdateMe(@AuthenticationPrincipal user: User, @Valid @RequestBody update: UserDto): ResponseEntity<UserDto> {
+    public fun partialUpdateMe(@AuthenticationPrincipal user: User, @Valid @RequestBody update: UserDto): Result<UserDto, DomainError> {
         if (user.username == "") {
-            return ResponseEntity.notFound().build()
+            return notFound("User not found")
         }
 
-        return ResponseEntity.ok().body(service.update(update))
+        return response(service.update(update))
     }
 
     @DeleteMapping("/@me")
-    public fun deleteMe(@AuthenticationPrincipal user: User): ResponseEntity<Unit> {
+    public fun deleteMe(@AuthenticationPrincipal user: User): Result<Unit, DomainError> {
         if (user.username == "") {
-            return ResponseEntity.notFound().build()
+            return notFound("User not found")
         }
-        service.delete(user.username)
 
-        return ResponseEntity.ok().build()
+        return response(service.delete(user.username))
     }
 }

@@ -18,7 +18,7 @@
 
 package net.kingchev.shared.utils
 
-import java.util.Optional
+import java.util.*
 
 private typealias ErrorFunction <E> = () -> E
 

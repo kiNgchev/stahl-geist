@@ -24,7 +24,7 @@ import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
 import java.time.LocalDateTime
 
-public fun response(error: DomainError): ResponseEntity<ErrorDto> {
+public fun error(error: DomainError): ResponseEntity<ErrorDto> {
     val status = error.status
     val body = ErrorDto(
         error.message,
@@ -32,11 +32,6 @@ public fun response(error: DomainError): ResponseEntity<ErrorDto> {
     )
     return response(status, body)
 }
-
-public fun <T> response(body: T): ResponseEntity<T> =
-    ResponseEntity
-        .ok()
-        .body(body)
 
 public fun <T> response(status: Int, body: T? = null): ResponseEntity<T> =
     response(HttpStatusCode.valueOf(status), body)
@@ -46,12 +41,20 @@ public fun <T> response(status: HttpStatusCode, body: T? = null): ResponseEntity
         .status(status)
         .body(body)
 
-public fun <T> badRequest(body: T? = null): ResponseEntity<T> =
-    ResponseEntity
-        .badRequest()
-        .body(body)
+public fun <T> response(body: T): Result<T, DomainError> =
+    Result.ok(body)
 
-public fun notFound(): ResponseEntity<*> =
-    ResponseEntity
-        .notFound()
-        .build<Any>()
+public fun <T> unauthorized(message: String): Result<T, DomainError> =
+    Result.err(DomainError.Unauthorized(message))
+
+public fun <T> notFound(message: String): Result<T, DomainError> =
+    Result.err(DomainError.NotFound(message))
+
+public fun <T> badRequest(message: String): Result<T, DomainError> =
+    Result.err(DomainError.BadRequest(message))
+
+public fun <T> forbidden(message: String): Result<T, DomainError> =
+    Result.err(DomainError.Forbidden(message))
+
+public fun <T> internal(message: String): Result<T, DomainError> =
+    Result.err(DomainError.Internal(message))

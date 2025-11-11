@@ -7,7 +7,6 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.provider.Provider
 import org.gradle.kotlin.dsl.exclude
 import org.gradle.kotlin.dsl.the
-import kotlin.toString
 
 
 fun Provider<MinimalExternalModuleDependency>.module(): String {

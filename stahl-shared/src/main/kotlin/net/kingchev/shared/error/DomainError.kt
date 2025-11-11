@@ -20,32 +20,32 @@ package net.kingchev.shared.error
 
 import org.springframework.http.HttpStatus
 
-public interface DomainError {
-    public val message: String
-    public val status: HttpStatus
+public sealed class DomainError : Throwable() {
+    public abstract override val message: String
+    public abstract val status: HttpStatus
 
     public class Unauthorized(
         override val message: String,
         override val status: HttpStatus = HttpStatus.UNAUTHORIZED
-    ) : DomainError
+    ) : DomainError()
 
     public class NotFound(
         override val message: String,
         override val status: HttpStatus = HttpStatus.NOT_FOUND
-    ) : DomainError
+    ) : DomainError()
 
     public class BadRequest(
         override val message: String,
         override val status: HttpStatus = HttpStatus.BAD_REQUEST
-    ) : DomainError
+    ) : DomainError()
 
     public class Forbidden(
         override val message: String,
         override val status: HttpStatus = HttpStatus.FORBIDDEN
-    ) : DomainError
+    ) : DomainError()
 
     public class Internal(
         override val message: String,
         override val status: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR
-    ) : DomainError
+    ) : DomainError()
 }

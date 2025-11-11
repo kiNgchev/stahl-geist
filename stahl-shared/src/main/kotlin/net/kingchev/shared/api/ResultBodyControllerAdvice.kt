@@ -18,9 +18,9 @@
 
 package net.kingchev.shared.api
 
-import net.kingchev.shared.utils.Result
 import net.kingchev.shared.error.DomainError
-import net.kingchev.shared.utils.response
+import net.kingchev.shared.utils.Result
+import net.kingchev.shared.utils.error
 import org.springframework.core.MethodParameter
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -52,7 +52,7 @@ public class ResultBodyControllerAdvice : ResponseBodyAdvice<Any> {
         if (body.error() is DomainError) {
             val error = body.error() as DomainError
             response.setStatusCode(error.status)
-            return response(error).body
+            return error(error).body
         }
 
         response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR)
