@@ -35,10 +35,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 @EnableJpaRepositories(basePackages = ["net.kingchev.users.repository"])
 @ComponentScan(basePackages = ["net.kingchev.users"])
 @Import(SecurityConfiguration::class)
-public class UsersConfiguration(
-    private val userService: UserService,
-    private val repository: AuthorityRepository
-) {
+public class UsersConfiguration(private val repository: AuthorityRepository) {
     @Bean
     public fun registerAuthorities(): CommandLineRunner {
         return CommandLineRunner {
