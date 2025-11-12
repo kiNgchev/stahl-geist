@@ -28,7 +28,7 @@ public interface UserRepository : JpaRepository<UserEntity, Long> {
     public fun findByUsername(username: String): Optional<UserEntity>
     public fun findByEmail(email: String): Optional<UserEntity>
 
-    public fun deleteByUsername(username: String): Unit
+    public fun deleteByUsername(username: String)
 
     public fun existsByUsername(username: String): Boolean
     public fun existsByEmail(email: String): Boolean

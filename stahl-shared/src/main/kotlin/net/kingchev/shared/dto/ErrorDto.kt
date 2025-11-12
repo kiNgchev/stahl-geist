@@ -16,6 +16,11 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.kingchev.users.dto
+package net.kingchev.shared.dto
 
-public data class ErrorResponse(var status: String, var message: String)
+import java.time.LocalDateTime
+
+public data class ErrorDto(
+    public val message: String,
+    public val datetime: LocalDateTime
+)

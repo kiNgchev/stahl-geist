@@ -106,6 +106,8 @@ services:
         JAR_FILE: stahl-eureka/build/libs/stahl-eureka.jar
     environment:
       LOKI: http://host.docker.internal:3100
+    healthcheck:
+      test: curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1
     networks:
       - stahl-net
     ports:
@@ -133,6 +135,8 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: git
       LOKI: http://host.docker.internal:3100
+    healthcheck:
+      test: curl --fail --silent localhost:8888/actuator/health | grep UP || exit 1
     networks:
       - stahl-net
     ports:

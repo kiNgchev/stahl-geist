@@ -46,17 +46,14 @@ public class Property<T>(
 
     public operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
         val result = properties.getProperty(key)
-
-        if (result == null && default == null)
-            throw NullPointerException("This property value is not defined for $key")
-        else if (result == null && default != null)
-            return default
+            ?: return default
+            ?: throw NullPointerException("This property value is not defined for $key")
 
         return block(result)
     }
 
     public operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T): Nothing
-            = throw UnsupportedOperationException("You may not change this value")
+        = throw UnsupportedOperationException("You may not change this value")
 }
 
 public class Environment<T>(
@@ -66,17 +63,14 @@ public class Environment<T>(
 ) {
     public operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
         val result = System.getenv(key)
-
-        if (result == null && default == null)
-            throw NullPointerException("This environment value is not defined for $key")
-        else if (result == null && default != null)
-            return default
+            ?: return default
+            ?: throw NullPointerException("This environment value is not defined for $key")
 
         return block(result)
     }
 
     public operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T): Nothing
-            = throw UnsupportedOperationException("You may not change this value")
+        = throw UnsupportedOperationException("You may not change this value")
 }
 
 public fun <T> property(

@@ -99,8 +99,11 @@ public class UserService(
     @Transactional
     @CachePut(cacheNames = ["user"], key = "#username")
     public fun create(name: String, username: String, email: String, password: String, vararg authorities: Role = arrayOf()): UserDto {
-        if (existsByUsername(username) || existsByEmail(email))
+        if (existsByUsername(username))
             throw EntityAlreadyExistsException("User with $username already exists")
+
+        if (existsByEmail(email))
+            throw EntityAlreadyExistsException("User with $email already exists")
 
         val user = UserEntity(name = name, username = username, email = email, password = encoder.encode(password))
         if (authorities.isNotEmpty()) {

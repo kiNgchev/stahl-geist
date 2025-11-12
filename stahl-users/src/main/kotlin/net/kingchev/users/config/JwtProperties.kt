@@ -18,6 +18,7 @@
 
 package net.kingchev.users.config
 
+import net.kingchev.shared.utils.delegate.env
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
 import java.time.Duration
@@ -28,8 +29,8 @@ public class JwtProperties {
     /**
      * Secret key used for signing JWT tokens
      */
-    public var secret: String = "5JzoMbk6E5qIqHSuBTgeQCARtUsxAkBiHwdjXOSW8kWdXzYmP3X51C0"
-    
+    public val secret: String by env("JWT_SECRET")
+
     /**
      * Access token expiration time
      */

@@ -19,51 +19,52 @@
 package net.kingchev.users.controller
 
 import jakarta.validation.Valid
+import net.kingchev.shared.error.DomainError
+import net.kingchev.shared.utils.Result
 import net.kingchev.shared.utils.badRequest
 import net.kingchev.shared.utils.response
 import net.kingchev.users.dto.*
 import net.kingchev.users.security.JwtProvider
 import net.kingchev.users.service.UserService
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController(
-    private val service: UserService,
-    private val provider: JwtProvider,
-) {
+public class AuthController(private val service: UserService, private val provider: JwtProvider) {
     @PostMapping("/register")
-    public fun register(@Valid @RequestBody request: RegistrationRequest): ResponseEntity<RegisterResponse> {
-        if (service.existsByUsername(request.username) or service.existsByEmail(request.email)) {
-            return badRequest(RegisterResponse(null, null, "User already registered"))
-        }
+    public fun register(@Valid @RequestBody request: RegistrationRequest): Result<RegisterResponse, DomainError> {
+        if (service.existsByUsername(request.username) or service.existsByEmail(request.email))
+            return badRequest("User already registered")
+
         val (name, username, email, password) = request
         val dto = service.create(name, username, email, password)
-
-        val response = RegisterResponse(generateToken(dto), dto, "User successfully registered")
+        val response = RegisterResponse(
+            generateToken(dto),
+            dto,
+            "User successfully registered"
+        )
 
         return response(response)
     }
 
     @GetMapping("/login")
-    public fun login(@Valid @RequestBody request: LoginRequest): ResponseEntity<LoginResponse> {
-        if (!service.existsByUsername(request.username)) {
-            return badRequest(LoginResponse(null, "User does not exists"))
-        }
+    public fun login(@Valid @RequestBody request: LoginRequest): Result<LoginResponse, DomainError> {
+        if (!service.existsByUsername(request.username))
+            return badRequest("User does not exists")
 
-        if (!service.check(request.username, request.password)) {
-            return badRequest(LoginResponse(null, "User password invalid"))
-        }
+        if (!service.check(request.username, request.password))
+            return badRequest("User password invalid")
 
         val dto = service.findByUsername(request.username)
-        val response = LoginResponse(generateToken(dto), "User successfully logged in")
+        val response = LoginResponse(
+            generateToken(dto),
+            "User successfully logged in"
+        )
 
         return response(response)
     }
 
     private fun generateToken(user: UserDto): String {
-
         return provider.createToken(
             claims = mapOf(
                 "email" to user.email,
