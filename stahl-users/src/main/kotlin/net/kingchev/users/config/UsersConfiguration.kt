@@ -33,15 +33,15 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 @Configuration
 @EntityScan(basePackages = ["net.kingchev"])
 @EnableJpaRepositories(basePackages = ["net.kingchev.users.repository"])
-@ComponentScan(basePackages = ["net.kingchev.users"])
+@ComponentScan(basePackages = ["net.kingchev.users", "net.kingchev.shared"])
 @Import(SecurityConfiguration::class)
 public class UsersConfiguration(private val repository: AuthorityRepository) {
     @Bean
     public fun registerAuthorities(): CommandLineRunner {
         return CommandLineRunner {
-            Role.entries.forEach {
-                repository.save(Authority(it))
-            }
+            Role.entries
+                .map { role -> Authority(role) }
+                .forEach(repository::save)
         }
     }
 }

@@ -30,10 +30,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController(
-    private val service: UserService,
-    private val provider: JwtProvider,
-) {
+public class AuthController(private val service: UserService, private val provider: JwtProvider) {
     @PostMapping("/register")
     public fun register(@Valid @RequestBody request: RegistrationRequest): Result<RegisterResponse, DomainError> {
         if (service.existsByUsername(request.username) or service.existsByEmail(request.email))

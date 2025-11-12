@@ -104,6 +104,6 @@ public sealed interface Result<T, E : Throwable> {
     }
 }
 
-public fun <T, E : Throwable> Optional<T?>.result(error:ErrorFunction<E>): Result<T, E> {
+public fun <T, E : Throwable> Optional<T?>.result(error: ErrorFunction<E>): Result<T, E> {
     return Result.fromOptional<T, E>(this, error)
 }

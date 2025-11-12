@@ -38,6 +38,7 @@ public class JwtFilter(private val provider: JwtProvider, private val userDetail
             val authorizationHeader = request.getHeader("Authorization")
             var jwt: String? = null
             var username: String? = null
+
             if (authorizationHeader !== null && authorizationHeader.startsWith("Bearer ")) {
                 jwt = authorizationHeader.substring(7)
                 username = provider.extractUsername(jwt)

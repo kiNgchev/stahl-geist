@@ -30,9 +30,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/users/@me")
 public class SelfController(private val service: UserService) {
-    @GetMapping("/@me")
+    @GetMapping
     public fun me(@AuthenticationPrincipal user: User): Result<UserDto, DomainError> {
         if (user.username == "") {
             return notFound("User is not found")
@@ -40,7 +40,7 @@ public class SelfController(private val service: UserService) {
         return response(service.findByUsername(user.username))
     }
 
-    @PutMapping("/@me")
+    @PutMapping
     public fun updateMe(@AuthenticationPrincipal user: User, @Valid @RequestBody update: UserDto): Result<UserDto, DomainError> {
         if (user.username == "") {
             return notFound("User not found")
@@ -49,7 +49,7 @@ public class SelfController(private val service: UserService) {
         return response(service.update(update))
     }
 
-    @PatchMapping("/@me")
+    @PatchMapping
     public fun partialUpdateMe(@AuthenticationPrincipal user: User, @Valid @RequestBody update: UserDto): Result<UserDto, DomainError> {
         if (user.username == "") {
             return notFound("User not found")
@@ -58,7 +58,7 @@ public class SelfController(private val service: UserService) {
         return response(service.update(update))
     }
 
-    @DeleteMapping("/@me")
+    @DeleteMapping
     public fun deleteMe(@AuthenticationPrincipal user: User): Result<Unit, DomainError> {
         if (user.username == "") {
             return notFound("User not found")

@@ -14,6 +14,7 @@ spring:
               uri: lb://stahl-users-service
               predicates:
                 - Path=/api/users/**
+                - Path=/auth/**
 eureka:
   client:
     service-url:
