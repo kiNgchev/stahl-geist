@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.liquibase.core)
+    implementation(libs.spring.boot.starter.liquibase)
     implementation(libs.spring.boot.starter.data.jpa)
     implementation(libs.spring.boot.starter.security)
 }
