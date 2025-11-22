@@ -1,16 +1,17 @@
 [versions]
-kotlin = "2.2.0"
+kotlin = "2.2.21"
 kotlinx-serialization = "1.9.0"
-spring-boot = "3.5.0"
+spring-boot = "4.0.0"
 jmh = "1.37"
 jmh-plugin = "0.7.3"
 spring-boot-admin = "3.5.0"
-spring-cloud = "2025.0.0"
-spring-modulith = "1.4.0"
+spring-cloud = "2025.1.0-RC1"
+spring-modulith = "2.0.0-RC1"
 jjwt = "0.12.5"
 mapstruct = "1.6.3"
 gatling = "3.11.3"
 
+# TODO: Split on several versions catalogs?
 [libraries]
 # Spring Boot starters
 spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
@@ -73,7 +74,7 @@ kotlin-serialization-core-jvm = { module = "org.jetbrains.kotlinx:kotlinx-serial
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
 
 # Database
-liquibase-core = { module = "org.liquibase:liquibase-core" }
+spring-boot-starter-liquibase = { module = "org.springframework.boot:spring-boot-starter-liquibase" }
 postgresql = { module = "org.postgresql:postgresql" }
 
 # Monitoring
@@ -156,7 +157,7 @@ spring-implementation = [
     "jackson-module-kotlin",
     "spring-boot-admin-starter-client",
     "reactor-kotlin-extensions",
-    "liquibase-core",
+    "spring-boot-starter-liquibase",
     "spring-cloud-starter-config",
     "spring-cloud-starter-netflix-eureka-client",
     "spring-cloud-starter-vault-config",

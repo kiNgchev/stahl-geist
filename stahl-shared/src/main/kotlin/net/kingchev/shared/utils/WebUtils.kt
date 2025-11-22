@@ -33,10 +33,10 @@ public fun error(error: DomainError): ResponseEntity<ErrorDto> {
     return response(status, body)
 }
 
-public fun <T> response(status: Int, body: T? = null): ResponseEntity<T> =
+public fun <T : Any> response(status: Int, body: T? = null): ResponseEntity<T> =
     response(HttpStatusCode.valueOf(status), body)
 
-public fun <T> response(status: HttpStatusCode, body: T? = null): ResponseEntity<T> =
+public fun <T : Any> response(status: HttpStatusCode, body: T? = null): ResponseEntity<T> =
     ResponseEntity
         .status(status)
         .body(body)

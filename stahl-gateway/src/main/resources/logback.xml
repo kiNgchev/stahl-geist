@@ -3,8 +3,12 @@
 
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <import class="ch.qos.logback.core.boolex.PropertyConditionBase"/>
 
-    <if condition='isDefined("LOKI_SERVER_URL")'>
+    <condition class="ch.qos.logback.core.boolex.IsPropertyDefinedCondition">
+        <key>LOKI</key>
+    </condition>
+    <if>
         <then>
             <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
                 <http>
