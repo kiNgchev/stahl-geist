@@ -24,50 +24,32 @@ private typealias ErrorFunction <E> = () -> E
 
 public sealed interface Result<T, E : Throwable> {
     public companion object {
+        @JvmStatic
         public fun <T, E : Throwable> ok(value: T): Result<T, E> = Ok(value)
+        @JvmStatic
         public fun <T, E : Throwable> err(error: E): Result<T, E> = Err(error)
 
+        @JvmStatic
         public fun <T, E : Throwable> ofNullable(value: T?, error: ErrorFunction<E>): Result<T, E> =
             ofNullable(value, error())
 
+        @JvmStatic
         public fun <T, E : Throwable> ofNullable(value: T?, error: E): Result<T, E> =
             if (value != null)
                 ok(value)
             else
                 err(error)
 
+        @JvmStatic
         public fun <T, E : Throwable> fromOptional(optional: Optional<T?>, error: ErrorFunction<E>): Result<T, E> =
             fromOptional(optional, error())
 
+        @JvmStatic
         public fun <T, E : Throwable> fromOptional(optional: Optional<T?>, error: E): Result<T, E> =
             if (optional.isPresent)
                 ok(optional.get())
             else
                 err(error)
-
-        public inline fun <T, reified E : Throwable> wrap(func: () -> T, error: E): Result<T, E> =
-            try {
-                ok(func())
-            } catch (e: Exception) {
-                if (e is E) err(error)
-                else throw e
-            }
-
-        public inline fun <T, reified E : Throwable> wrap(func: () -> T, error: ErrorFunction<E>): Result<T, E> =
-            try {
-                ok(func())
-            } catch (e: Exception) {
-                if (e is E) err(error())
-                else throw e
-            }
-
-        public suspend inline fun <T, reified E : Throwable> wrap(func: suspend() -> T, error: E): Result<T, E> =
-            try {
-                ok(func())
-            } catch (e: Exception) {
-                if (e is E) err(error)
-                else throw e
-            }
     }
 
     public fun value(): T
@@ -107,3 +89,27 @@ public sealed interface Result<T, E : Throwable> {
 public fun <T, E : Throwable> Optional<T?>.result(error: ErrorFunction<E>): Result<T, E> {
     return Result.fromOptional<T, E>(this, error)
 }
+
+public inline fun <T, reified E : Throwable> wrap(func: () -> T, error: E): Result<T, E> =
+    try {
+        Result.ok(func())
+    } catch (e: Exception) {
+        if (e is E) Result.err(error)
+        else throw e
+    }
+
+public inline fun <T, reified E : Throwable> wrap(func: () -> T, error: ErrorFunction<E>): Result<T, E> =
+    try {
+        Result.ok(func())
+    } catch (e: Exception) {
+        if (e is E) Result.err(error())
+        else throw e
+    }
+
+public suspend inline fun <T, reified E : Throwable> wrap(func: suspend() -> T, error: E): Result<T, E> =
+    try {
+        Result.ok(func())
+    } catch (e: Exception) {
+        if (e is E) Result.err(error)
+        else throw e
+    }
