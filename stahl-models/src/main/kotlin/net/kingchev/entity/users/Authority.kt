@@ -16,9 +16,10 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.kingchev.entity
+package net.kingchev.entity.users
 
 import jakarta.persistence.*
+import net.kingchev.entity.BaseEntity
 import net.kingchev.model.Role
 import org.hibernate.proxy.HibernateProxy
 

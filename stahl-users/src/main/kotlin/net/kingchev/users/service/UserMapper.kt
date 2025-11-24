@@ -18,8 +18,8 @@
 
 package net.kingchev.users.service
 
-import net.kingchev.entity.Authority
-import net.kingchev.entity.UserEntity
+import net.kingchev.entity.users.Authority
+import net.kingchev.entity.users.UserEntity
 import net.kingchev.users.dto.AuthorityDto
 import net.kingchev.users.dto.UserDto
 import org.mapstruct.*

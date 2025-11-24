@@ -16,24 +16,17 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.kingchev.users.dto
+package net.kingchev.net.kingchev.posts
 
-import java.io.Serializable
+import net.kingchev.net.kingchev.posts.config.PostsConfiguration
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
+import org.springframework.context.annotation.Import
 
-public data class RegistrationRequest(
-    val name: String,
-    val username: String,
-    val email: String,
-    val password: String
-) : Serializable
+@SpringBootApplication
+@Import(PostsConfiguration::class)
+public class StahlPostServiceApplication
 
-public data class RegisterResponse(val token: String?, val user: UserDto?, val message: String? = null)
-
-public data class LoginRequest(
-    val username: String,
-    val password: String
-)
-
-public data class LoginResponse(val token: String?, val message: String? = null) : Serializable
-
-public data class CheckResponse(val valid: Boolean)
+public fun main(args: Array<String>) {
+    runApplication<StahlPostServiceApplication>(*args)
+}

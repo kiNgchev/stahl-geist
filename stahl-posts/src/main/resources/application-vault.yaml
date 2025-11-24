@@ -1,0 +1,15 @@
+spring:
+  config:
+    import: vault://
+  cloud:
+    vault:
+      uri: ${VAULT_SERVER_URL:http://localhost:8200}
+      token: root
+      kv:
+        enabled: true
+        backend: secret
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver

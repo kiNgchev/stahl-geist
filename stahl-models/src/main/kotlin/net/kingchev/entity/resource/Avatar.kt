@@ -20,9 +20,10 @@ package net.kingchev.entity.resource
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.Lob
 import jakarta.persistence.Table
-import net.kingchev.entity.BaseEntity
 import org.hibernate.proxy.HibernateProxy
+import java.sql.Blob
 import java.time.Instant
 import java.util.*
 
@@ -32,12 +33,13 @@ public class AvatarEntity(
     @Column
     public var name: String? = null,
 
+    @Lob
     @Column
-    public var content: ByteArray? = null,
+    public var content: Blob? = null,
 
     @Column
     public val uploadTime: Date = Date.from(Instant.now()),
-) : BaseEntity() {
+) : BaseResource() {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null) return false
@@ -48,7 +50,7 @@ public class AvatarEntity(
         if (thisEffectiveClass != oEffectiveClass) return false
         other as AvatarEntity
 
-        return id == other.id
+        return hash == other.hash
     }
 
     override fun hashCode(): Int =
@@ -56,6 +58,6 @@ public class AvatarEntity(
 
     @Override
     override fun toString(): String {
-        return this::class.simpleName + "(  id = $id )"
+        return this::class.simpleName + "( hash = $hash )"
     }
 }

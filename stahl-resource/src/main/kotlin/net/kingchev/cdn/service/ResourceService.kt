@@ -23,6 +23,7 @@ import net.kingchev.cdn.repository.AvatarRepository
 import net.kingchev.entity.resource.AvatarEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.sql.Blob
 import kotlin.jvm.optionals.getOrElse
 
 @Service
@@ -46,7 +47,7 @@ public class ResourceService(private val avatarRepository: AvatarRepository) {
         avatarRepository.delete(entity)
 
     @Transactional
-    public fun createAvatar(name: String, content: ByteArray): AvatarEntity {
+    public fun createAvatar(name: String, content: Blob): AvatarEntity {
         val avatar = AvatarEntity()
         avatar.name = name
         avatar.content = content

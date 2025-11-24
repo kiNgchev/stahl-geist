@@ -64,6 +64,22 @@ public class AuthController(private val service: UserService, private val provid
         return response(response)
     }
 
+    @GetMapping("/check")
+    public fun check(@RequestHeader("Authorization") header: String): Result<CheckResponse, DomainError> {
+
+        if (!header.startsWith("Bearer "))
+            return badRequest("Bearer is not allowed")
+
+        val jwt: String = header.substring(7)
+        val username = provider.extractUsername(jwt)
+
+        if (service.existsByUsername(username)) {
+            response(CheckResponse(true))
+        }
+
+        return response(CheckResponse(false))
+    }
+
     private fun generateToken(user: UserDto): String {
         return provider.createToken(
             claims = mapOf(

@@ -18,8 +18,10 @@
 
 package net.kingchev.users.service
 
+import jakarta.annotation.PostConstruct
 import jakarta.persistence.EntityNotFoundException
-import net.kingchev.entity.UserEntity
+import net.kingchev.entity.users.Authority
+import net.kingchev.entity.users.UserEntity
 import net.kingchev.model.Role
 import net.kingchev.shared.exceptions.EntityAlreadyExistsException
 import net.kingchev.users.dto.UserDto
@@ -41,6 +43,13 @@ public class UserService(
     private val mapper: UserMapper,
     private val encoder: PasswordEncoder
 ) {
+    @PostConstruct
+    public fun init() {
+        Role.entries
+            .map { role -> Authority(role) }
+            .forEach(authorityRepository::save)
+    }
+
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = ["user"], key = "#result.username")
     public fun findById(id: Long): UserDto =
@@ -72,7 +81,7 @@ public class UserService(
         val entity = mapper.toEntity(user)
 
         if (password != null) {
-            entity.password = encoder.encode(password)
+            entity.password = encoder.encode(password)!!
         }
 
         return mapper.toDto(repository.save(entity))
@@ -105,7 +114,7 @@ public class UserService(
         if (existsByEmail(email))
             throw EntityAlreadyExistsException("User with $email already exists")
 
-        val user = UserEntity(name = name, username = username, email = email, password = encoder.encode(password))
+        val user = UserEntity(name = name, username = username, email = email, password = encoder.encode(password)!!)
         if (authorities.isNotEmpty()) {
             val authorities = authorityRepository.findByAuthorityIn(authorities.toList())
             user.authorities += authorities

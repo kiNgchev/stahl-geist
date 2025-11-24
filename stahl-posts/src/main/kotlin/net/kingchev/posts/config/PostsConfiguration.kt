@@ -16,30 +16,22 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.kingchev.cdn.config
+package net.kingchev.net.kingchev.posts.config
 
-import org.springframework.boot.persistence.autoconfigure.EntityScan
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.invoke
-import org.springframework.security.web.SecurityFilterChain
+import org.springframework.context.annotation.Scope
+import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
-@EntityScan(basePackages = ["net.kingchev"])
-@EnableJpaRepositories(basePackages = ["net.kingchev.cdn.repository"])
-@ComponentScan(basePackages = ["net.kingchev.cdn", "net.kingchev.shared"])
-public class ResourceConfiguration {
+@ComponentScan("net.kingchev.posts", "net.kingchev.shared")
+public class PostsConfiguration {
     @Bean
-    public fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        http {
-            authorizeHttpRequests {
-                authorize(anyRequest, permitAll)
-            }
-        }
-
-        return http.build()
-    }
+    @Scope("prototype")
+    public fun usersWebClient(@Value("stahl.services.users.url:lb://stahl-users-service") url: String): WebClient =
+        WebClient.builder()
+            .baseUrl(url)
+            .build()
 }

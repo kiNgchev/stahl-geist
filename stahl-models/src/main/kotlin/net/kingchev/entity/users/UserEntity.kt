@@ -16,9 +16,10 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.kingchev.entity
+package net.kingchev.entity.users
 
 import jakarta.persistence.*
+import net.kingchev.entity.BaseEntity
 import org.hibernate.proxy.HibernateProxy
 
 @Entity
@@ -46,7 +47,7 @@ public class UserEntity(
     @JoinTable(name = "user_authority", schema = "user_management",
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "authority_id")])
-    public var authorities: Set<Authority> = setOf(),
+    public var authorities: MutableSet<Authority> = mutableSetOf(),
 
     @Column(nullable = true)
     public var avatarUrl: String? = null,

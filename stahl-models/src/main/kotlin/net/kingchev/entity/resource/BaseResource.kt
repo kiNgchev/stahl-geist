@@ -16,24 +16,17 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.kingchev.users.dto
+package net.kingchev.entity.resource
 
-import java.io.Serializable
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.MappedSuperclass
+import java.util.UUID
 
-public data class RegistrationRequest(
-    val name: String,
-    val username: String,
-    val email: String,
-    val password: String
-) : Serializable
-
-public data class RegisterResponse(val token: String?, val user: UserDto?, val message: String? = null)
-
-public data class LoginRequest(
-    val username: String,
-    val password: String
-)
-
-public data class LoginResponse(val token: String?, val message: String? = null) : Serializable
-
-public data class CheckResponse(val valid: Boolean)
+@MappedSuperclass
+public abstract class BaseResource {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    public var hash: UUID? = null
+}

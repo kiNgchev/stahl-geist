@@ -21,8 +21,10 @@ package net.kingchev.cdn
 import net.kingchev.cdn.config.ResourceConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient
 import org.springframework.context.annotation.Import
 
+@EnableDiscoveryClient
 @SpringBootApplication
 @Import(ResourceConfiguration::class)
 public class StahlResourceApplication
